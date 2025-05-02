@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Emojis Pickup Lines</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Animated background gradient */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ff9ff3, #feca57, #ff6b6b, #48dbfb);
+            background-size: 400% 400%;
+            animation: gradientBG 8s infinite ease-in-out;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating emojis animation */
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.8;
+            animation: floatEmojis 10s linear infinite;
+        }
+
+        @keyframes floatEmojis {
+            0% { transform: translateY(100vh) scale(1); opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Frosted glass effect */
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            max-width: 500px;
+            margin: 2rem auto;
+            text-align: center;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        #pickupLine {
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            min-height: 60px;
+        }
+
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.3s ease;
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: #5b4bc4;
+            box-shadow: 0 0 25px rgba(108, 92, 231, 0.7);
+        }
+
+        #welcomeScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        #nameInput {
+            padding: 0.8rem;
+            margin: 1rem 0;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            width: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        #nameInput::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="container">
+        <div>
+            <h1>Welcome to Pickup Lines Generator! 😊</h1>
+            <input type="text" id="nameInput" placeholder="Enter your name">
+            <br>
+            <button onclick="startApp()">Start</button>
+        </div>
+    </div>
+
+    <!-- Floating Emojis -->
+    <script>
+        function generateEmojis() {
+            const emojis = ['😍', '💖', '✨', '🔥', '🌟', '🥰', '😘', '💫', '🎉'];
+            for (let i = 0; i < 30; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'emoji';
+                emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = `${Math.random() * 100}vw`;
+                emoji.style.top = `${Math.random() * 100}vh`;
+                emoji.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                emoji.style.fontSize = `${Math.random() * 1.5 + 1.5}rem`;
+                document.body.appendChild(emoji);
+            }
+        }
+
+        window.onload = generateEmojis;
+    </script>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContent" style="display: none;">
+        <h1>Welcome, <span id="userName"></span>! 😍</h1>
+        <div id="pickupLine">Click start to get your first pickup line!</div>
+        <button onclick="generatePickupLine()">Start</button>
+    </div>
+
+    <script>
+        const pickupLines = [
+            "Are you a magician? Because whenever I look at you, everyone else disappears. ✨",
+            "Do you have a name, or can I call you mine? 😉",
+            "Are you a campfire? Because you're hot and I want s'more. 🔥",
+            "Is your name Google? Because you have everything I've been searching for. 🌐",
+            "Are you made of copper and tellurium? Because you're Cu-Te. 💘",
+            "Do you have a map? Because I keep getting lost in your eyes. 🗺️",
+            "Are you French? Because Eiffel for you. 🗼",
+            "Are you a time traveler? Because I see you in my future. ⏳",
+            "Is your dad a baker? Because you're a cutie pie! 🥧",
+            "Are you a parking ticket? Because you've got 'fine' written all over you. 🚗"
+        ];
+
+        let currentLineIndex = -1;
+
+        function generatePickupLine() {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * pickupLines.length);
+            } while (newIndex === currentLineIndex);
+            
+            currentLineIndex = newIndex;
+            document.getElementById('pickupLine').textContent = pickupLines[currentLineIndex];
+        }
+
+        function startApp() {
+            const userName = document.getElementById('nameInput').value.trim();
+            if (!userName) {
+                alert('Please enter your name!');
+                return;
+            }
+
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
